@@ -34,15 +34,10 @@ describe "Manifesto::Inspector" do
       @gem_directory = @inspector.find_gem_directory
     end
 
-    it "finds the gem directory and stores it" do
-      @inspector.should_receive(:find_gem_directory).and_return(@gem_directory)
-      @inspector.find_gems
-      @inspector.gem_directory.should match(/\/gems/) # rvm gemset uses a path including /gems
-    end
-
     it "compiles a list of gems" do
       @inspector.find_gems
-      @inspector.gem_list.should == %w(
+      @inspector.gem_list.should =~ %w(
+        bundler
         diff-lcs
         git
         jeweler
@@ -66,19 +61,47 @@ describe "Manifesto::Inspector" do
     end
   end
 
-  describe 'finding licence information' do
+  describe 'finding licenses' do
     before do
-      pending('not yet implemented')
-      @inspector.find_gems
+      @inspector.find_licenses
     end
 
-    it "adds a licence key to the gems hash" do
-      @inpsector.gems['json']['licence'].should_not be_nil
-    end
+    describe 'licenses bodys will be found in files matching' do
+      it "LICENCE" do
+        @inspector.gems['bundler']['licenses'][0]['body'].should match(/MIT License/)
+        @inspector.gems['simplecov']['licenses'][0]['body'].should match(/Christoph Olszowka/)
+      end
 
-    it "licence value will be an array of hashes, with keys 'type' and 'body'" do
-      @inspector.gems['json']['licence'].should be_an Array
-      @inspector.gems['json']['licence'][0].keys should == ['type', 'body']
+      it "licence.*" do
+        @inspector.gems['rspec']['licenses'][0]['body'].should match(/David Chelimsky/)
+        @inspector.gems['multi_json']['licenses'][0]['body'].should match(/Intridea/)
+        @inspector.gems['jeweler']['licenses'][0]['body'].should match(/Josh Nichols/)
+        @inspector.gems['diff-lcs']['licenses'][0]['body'].should match(/MIT License/)
+      end
+
+      it "COPYING.*" do
+        @inspector.gems['json']['licenses'][0]['body'].should match(/copyrighted free software/)
+      end
+
+      it "LEGAL.*" do
+        matched = false
+        @inspector.gems['yard']['licenses'].each do |hash|
+          matched ||= hash['body'].match(/lib\/parser\/c_parser.rb/)
+        end
+        matched.should_not == false
+      end
+
+      it "GPL.*" do
+        matched = false
+        @inspector.gems['json']['licenses'].each do |hash|
+          matched ||= hash['body'].match(/GNU GENERAL PUBLIC LICENSE/)
+        end
+        matched.should_not == false
+      end
+
+      it "is empty if no licence is found" do
+        @inspector.gems['git']['licenses'].should be_empty
+      end
     end
   end
 end
