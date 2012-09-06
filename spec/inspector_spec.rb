@@ -30,10 +30,6 @@ describe "Manifesto::Inspector" do
   end
 
   describe 'building a gem list' do
-    before do
-      @gem_directory = @inspector.find_gem_directory
-    end
-
     it "compiles a list of gems" do
       @inspector.find_gems
       @inspector.gem_list.should =~ %w(
@@ -102,6 +98,11 @@ describe "Manifesto::Inspector" do
       it "is empty if no licence is found" do
         @inspector.gems['git']['licenses'].should be_empty
       end
+    end
+
+    it "finds license for gems not in the standard gem location" do
+      @inspector.gems['rake']['licenses'].size.should == 1
+      @inspector.gems['rake']['licenses'][0]['body'].should match(/Jim Weirich/)
     end
   end
 end

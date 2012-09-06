@@ -1,6 +1,6 @@
 module Manifesto
   class Inspector
-    attr_accessor :path, :lockfile, :gem_directory, :gems
+    attr_accessor :path, :lockfile, :gem_directories, :gems
 
     def initialize path
       self.path = path
@@ -17,9 +17,8 @@ module Manifesto
       end
     end
 
-    def find_gem_directory
-      bundler_path = `bundle show bundler` # a gem that is know to exist!
-      bundler_path.gsub /\/bundler.*\n$/, ''
+    def find_gem_directories
+      ENV["GEM_PATH"].split(File::PATH_SEPARATOR)
     end
 
     def find_gems
@@ -44,32 +43,38 @@ module Manifesto
     end
 
     def find_licenses
-      self.gem_directory ||= find_gem_directory
+      self.gem_directories ||= find_gem_directories
       find_gems
       missing_gems = []
-      gems.each do |name, info|
-        dir = "#{gem_directory}/#{name}-#{info['version']}"
-        if File.exist? dir
-          licenses = Dir.entries(dir).map do |d| 
-            d if d.match(/license|copying|legal|gpl/i)
-          end.compact
-          
-          licenses.each do |file_name|
-            body = File.read("#{dir}/#{file_name}")
-            gems[name]['licenses'] << {
-              'body' => body
-            }
+      gem_directories.each do |gem_directory|
+        gems.each do |name, info|
+          next if gems[name]['licenses'].size > 0
+
+          dir = "#{gem_directory}/gems/#{name}-#{info['version']}"
+          if File.exist? dir
+            extract_licenses dir, name
+          else
+            missing_gems << name
           end
-        else 
-          missing_gems << name
         end
       end
-
-      # do something special to find the missing gems
     end
 
     def gem_list
       gems.keys
+    end
+
+    def extract_licenses dir, name
+      licenses = Dir.entries(dir).map do |d|
+        d if d.match(/license|copying|legal|gpl/i)
+      end.compact
+
+      licenses.each do |file_name|
+        body = File.read("#{dir}/#{file_name}")
+        gems[name]['licenses'] << {
+          'body' => body
+        }
+      end
     end
   end
 end
