@@ -15,7 +15,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "manifesto"
-  gem.homepage = "http://github.com/baccigalupi/manifesto"
+  gem.homepage = "http://github.com/blazing_cloud/manifesto"
   gem.license = "MIT"
   gem.summary = %Q{Manifesto: Providing Visibility into Your Gem Licences}
   gem.description = %Q{Manifesto inspects your bundled gems to compile a list of licences for each gem and sub-gem used in a project. Just use a Gemfile, and Manifesto, and go!}
