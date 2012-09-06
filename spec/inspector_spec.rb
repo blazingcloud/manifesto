@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Manifesto::Inspector" do
   before do
-    @path = File.dirname(__FILE__) + "/../" 
+    @path = File.dirname(__FILE__) + "/../"
     @inspector = Manifesto::Inspector.new @path
   end
 
