@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rake manifesto # run the rake taks
+git add manifestos/* # add the changes prior to the commit
+exit
