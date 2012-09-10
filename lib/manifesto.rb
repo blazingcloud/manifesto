@@ -10,7 +10,7 @@ module Manifesto
   def self.generate dir
     inspector = Inspector.new dir
     inspector.find_licenses
-    reporter = Reporter.new :gems => inspector.gems, :dir => dir
+    reporter = Reporter.print :gems => inspector.gems, :dir => dir
     puts "Generating a manifesto for #{dir}"
     reporter.print
   end
