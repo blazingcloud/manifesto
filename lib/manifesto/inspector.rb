@@ -24,7 +24,7 @@ module Manifesto
     def find_gems
       lockfile.rewind
       lockfile.each_line do |line|
-        matches = line.match(/^\s{4}([a-z\-_]*) \((.*)\)/i)
+        matches = line.match(/^\s{4}([a-z\-_\.]*) \((.*)\)/i)
         if matches
           self.gems[matches[1]] = {
             "version" => matches[2],

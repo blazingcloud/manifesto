@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+
+# todo: make this point to the gem
+require '/Users/kane/Projects/blazing_cloud/manifesto/lib/manifesto'
+
+Manifesto.generate Dir.pwd
+

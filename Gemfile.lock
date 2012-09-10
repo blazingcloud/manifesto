@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/baccigalupi/wheel.js.git
+  revision: 513fe7f7b21f92f17fab327a1392006fccb61d09
+  specs:
+    wheel.js (0.3.7)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -36,4 +42,5 @@ DEPENDENCIES
   rdoc (~> 3.12)
   rspec (~> 2.8.0)
   simplecov
+  wheel.js!
   yard (~> 0.7)

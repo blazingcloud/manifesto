@@ -12,4 +12,7 @@ group :development do
   gem "bundler", "~> 1.2.0"
   gem "jeweler", "~> 1.8.3"
   gem "simplecov", ">= 0"
+
+  # this one is used for testing, to make sure the right paths are found etc
+  gem 'wheel.js', :git => "git://github.com/baccigalupi/wheel.js.git"
 end
