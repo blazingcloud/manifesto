@@ -10,15 +10,21 @@ module Manifesto
     end
 
     def print
+      unless self.class::FORMAT
+        raise "Please add a FORMAT constant to the class to generate a report of this type"
+      end
       Dir.mkdir(dir) unless Dir.exist?(dir)
-      File.open "#{dir}/manifest.txt", 'w' do |f|
-        f.write(header)
-        f.write(body)
+      File.open "#{dir}/manifest.#{self.class::FORMAT}", 'w' do |f|
+        f.write(full_report)
       end
     end
 
+    def full_report
+      header + body
+    end
+
     def header
-      "#{HEADER}/n/nGenerated at: #{Time.now}\n\n"
+      "#{HEADER}\n\nGenerated at: #{Time.now}\n\n"
     end
 
     def body
@@ -30,12 +36,27 @@ module Manifesto
     end
 
     def print_gem gem_name, info
-      str = "#{gem_name}, version #{info['version']}:\n"
-      str << "    #{info['licenses'].size} licenses:\n"
-      info['licenses'].each_with_index do |license, i|
-        str << "    #{i+1}: #{license['body']}"
+      # stub method, should be overridden by subclasses
+    end
+
+    def self.inherited klass
+      @@reporters ||= []
+      @@reporters << klass
+      @@reporters.uniq
+    end
+
+    def self.reporters
+      @@reporters
+    end
+
+    def self.print opts
+      reporters.each do |klass|
+        begin
+          klass.new(opts).print
+        rescue Exception => e
+          puts "Unable to print manifest in format #{klass}:\n#{e}"
+        end
       end
-      str
     end
   end
 end

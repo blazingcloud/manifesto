@@ -16,7 +16,7 @@ describe 'Manifesto::Reporter' do
   end
 
   describe 'initialization' do
-    it "saves the gems data" do
+    it "stores the gems data" do
       @reporter.gems.should == @gems
     end
 
@@ -26,32 +26,53 @@ describe 'Manifesto::Reporter' do
   end
 
   describe 'printing' do
-    describe '#print' do
-      before do
-        `rm -rf #{@dir}/manifestos`
-        @reporter.print
-        @file_path = "#{@dir}/manifestos/manifest.txt"
-      end
+    before do
+      `rm -rf #{@dir}/manifestos`
+      Manifesto::Reporter.print({
+        :gems => @gems,
+        :dir => @dir
+      })
+    end
 
-      after :all do
-        `rm -rf #{@dir}/manifestos`
-      end
+    after :all do
+      `rm -rf #{@dir}/manifestos`
+    end
 
-      it "creates a manifestos directory if one does not exist" do
-        Dir.exist?("#{@dir}/manifestos").should be_true
-      end
+    it "creates a manifestos directory if one does not exist" do
+      Dir.exist?("#{@dir}/manifestos").should be_true
+    end
 
-      it "creates a file manifest.txt in the manifestos directory" do
-        File.exist?(@file_path).should be_true
-      end
+    it "creates files for all formats" do
+      File.exist?("#{@dir}/manifestos/manifest.txt").should be_true
+      File.exist?("#{@dir}/manifestos/manifest.md").should be_true
+      File.exist?("#{@dir}/manifestos/manifest.json").should be_true
+    end
+  end
 
-      it "outputs the header into manifest.txt" do
-        File.read(@file_path).should include Manifesto::Reporter::HEADER
-      end
+  describe 'text format' do
+    before do
+      `rm -rf #{@dir}/manifestos`
+      Manifesto::Reporter.print({
+        :gems => @gems,
+        :dir => @dir
+      })
+      @reporter = Manifesto::Reporter::Text.new({
+        :gems => @gems,
+        :dir => @dir
+      })
+      @file = File.read("#{@dir}/manifestos/manifest.txt")
+    end
 
-      it "outputs the body into manifest.txt" do
-        File.read(@file_path).should include @reporter.body
-      end
+    after :all do
+      `rm -rf #{@dir}/manifestos`
+    end
+
+    it "outputs the header into manifest.txt" do
+      @file.should include Manifesto::Reporter::HEADER
+    end
+
+    it "outputs the body into manifest.txt" do
+      @file.should include @reporter.body
     end
 
     describe "#header" do
