@@ -32,7 +32,7 @@ describe "Manifesto::Inspector" do
   describe 'building a gem list' do
     it "compiles a list of gems" do
       @inspector.find_gems
-      @inspector.gem_list.should =~ %w(
+      %w(
         bundler
         diff-lcs
         git
@@ -48,7 +48,9 @@ describe "Manifesto::Inspector" do
         simplecov
         simplecov-html
         yard
-      )
+      ).each do |gem_name|
+        @inspector.gem_list.should include gem_name
+      end
     end
 
     it "the gem hash will contain the right version information" do
@@ -100,9 +102,13 @@ describe "Manifesto::Inspector" do
       end
     end
 
-    it "finds license for gems not in the standard gem location" do
+    it "finds licenses for gems not in the standard gem location" do
       @inspector.gems['rake']['licenses'].size.should == 1
       @inspector.gems['rake']['licenses'][0]['body'].should match(/Jim Weirich/)
+    end
+
+    it "finds licenses for gems packaged by git" do
+      @inspector.gems['wheel.js']['licenses'].size.should == 1
     end
   end
 end

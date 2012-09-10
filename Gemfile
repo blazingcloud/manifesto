@@ -15,4 +15,5 @@ group :development do
 
   # this one is used for testing, to make sure the right paths are found etc
   gem 'wheel.js', :git => "git://github.com/baccigalupi/wheel.js.git"
+  gem 'gemlicense'
 end

@@ -51,12 +51,17 @@ module Manifesto
           next if gems[name]['licenses'].size > 0
 
           dir = "#{gem_directory}/gems/#{name}-#{info['version']}"
-          if File.exist? dir
-            extract_licenses dir, name
+          if extract_licenses dir, name
+            missing_gems.delete(name)
           else
             missing_gems << name
           end
         end
+      end
+
+      missing_gems.uniq.each do |name|
+        dir = `bundle show #{name}`.strip
+        extract_licenses dir, name
       end
     end
 
@@ -65,6 +70,9 @@ module Manifesto
     end
 
     def extract_licenses dir, name
+      unless File.exist? dir
+        return false
+      end
       licenses = Dir.entries(dir).map do |d|
         d if d.match(/license|copying|legal|gpl/i)
       end.compact
@@ -75,6 +83,7 @@ module Manifesto
           'body' => body
         }
       end
+      true
     end
   end
 end
