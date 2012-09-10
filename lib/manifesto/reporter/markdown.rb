@@ -18,6 +18,14 @@ module Manifesto
         str << "***\n"
         str
       end
+
+      def exceptions
+        str = "***\n# EXCEPTIONS\n\n"
+        exceptional_gems.each do |gem_name, info|
+          str << "* #{gem_name}, version #{info['version']}, #{info['licenses'].size} license(s)\n"
+        end
+        str
+      end
     end
   end
 end

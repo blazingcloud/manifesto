@@ -67,12 +67,16 @@ describe 'Manifesto::Reporter' do
       `rm -rf #{@dir}/manifestos`
     end
 
-    it "outputs the header into manifest.txt" do
+    it "outputs the header into report" do
       @file.should include Manifesto::Reporter::HEADER
     end
 
-    it "outputs the body into manifest.txt" do
+    it "outputs the body into report" do
       @file.should include @reporter.body
+    end
+
+    it "outputs the exceptions into the report" do
+      @file.should include @reporter.exceptions
     end
 
     describe "#header" do
@@ -93,6 +97,12 @@ describe 'Manifesto::Reporter' do
         @gems.keys.each do |gem_name|
           body.should include gem_name
         end
+      end
+    end
+
+    describe '#exceptions' do
+      it "lists the gems that have no licenses" do
+        @reporter.exceptions.should include "git"
       end
     end
   end

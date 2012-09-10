@@ -14,13 +14,14 @@ module Manifesto
         raise "Please add a FORMAT constant to the class to generate a report of this type"
       end
       Dir.mkdir(dir) unless Dir.exist?(dir)
+      File.delete("#{dir}/manifest.#{self.class::FORMAT}") if File.exist?("#{dir}/manifest.#{self.class::FORMAT}")
       File.open "#{dir}/manifest.#{self.class::FORMAT}", 'w' do |f|
         f.write(full_report)
       end
     end
 
     def full_report
-      header + body
+      header + body + exceptions
     end
 
     def header
@@ -33,6 +34,20 @@ module Manifesto
         str << print_gem( gem_name, info )
       end
       str
+    end
+
+    def exceptional_gems
+      error_cases = {}
+      gems.each do |gem_name, info|
+        if info['licenses'].size == 0
+          error_cases[gem_name] = info
+        end
+      end
+      error_cases
+    end
+
+    def exceptions
+      # stub method, should be overridden by subclasses
     end
 
     def print_gem gem_name, info

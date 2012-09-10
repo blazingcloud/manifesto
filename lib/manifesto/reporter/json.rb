@@ -10,7 +10,9 @@ module Manifesto
             :generated_at => Time.now
           },
 
-          :gems => gems
+          :gems => gems,
+
+          :exceptions => exceptional_gems
         })
       end
     end
