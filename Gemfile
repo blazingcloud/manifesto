@@ -13,7 +13,8 @@ group :development do
   gem "jeweler", "~> 1.8.3"
   gem "simplecov", ">= 0"
 
-  # this one is used for testing, to make sure the right paths are found etc
+  # these are more used for testing how it works, above gems are acutually used for dev
   gem 'wheel.js', :git => "git://github.com/baccigalupi/wheel.js.git"
   gem 'gemlicense'
+  gem 'manifesto', :git => "https://github.com/blazingcloud/manifesto.git"
 end

@@ -11,7 +11,7 @@ module Manifesto
     inspector = Inspector.new dir
     inspector.find_licenses
     puts "Generating a manifesto for #{dir}"
-    reporter = Reporter.print :gems => inspector.gems, :dir => dir
+    Reporter.print :gems => inspector.gems, :dir => dir
   end
 end
 

@@ -18,6 +18,7 @@ module Manifesto
       File.open "#{dir}/manifest.#{self.class::FORMAT}", 'w' do |f|
         f.write(full_report)
       end
+      full_report
     end
 
     def full_report
@@ -65,13 +66,15 @@ module Manifesto
     end
 
     def self.print opts
+      @@reports = []
       reporters.each do |klass|
         begin
-          klass.new(opts).print
+          @@reports << klass.new(opts).print
         rescue Exception => e
           puts "Unable to print manifest in format #{klass}:\n#{e}"
         end
       end
+      return @@reports
     end
   end
 end

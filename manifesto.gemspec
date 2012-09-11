@@ -9,18 +9,40 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kane Baccigalupi"]
-  s.date = "2012-09-05"
+  s.date = "2012-09-11"
   s.description = "Manifesto inspects your bundled gems to compile a list of licences for each gem and sub-gem used in a project. Just use a Gemfile, and Manifesto, and go!"
   s.email = "info@blazingcloud.net"
+  s.executables = ["manifesto"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
   ]
   s.files = [
+    ".rvmrc",
+    "Gemfile",
+    "Gemfile.lock",
+    "LICENSE.txt",
     "README.md",
-    "VERSION"
+    "Rakefile",
+    "VERSION",
+    "bin/manifesto",
+    "lib/generators/pre-commit",
+    "lib/manifesto.rb",
+    "lib/manifesto/inspector.rb",
+    "lib/manifesto/railtie.rb",
+    "lib/manifesto/reporter.rb",
+    "lib/manifesto/reporter/json.rb",
+    "lib/manifesto/reporter/markdown.rb",
+    "lib/manifesto/reporter/text.rb",
+    "lib/tasks/manifesto.rake",
+    "manifesto.gemspec",
+    "spec/fixtures/Gemfile",
+    "spec/inspector_spec.rb",
+    "spec/manifesto_spec.rb",
+    "spec/reporter_spec.rb",
+    "spec/spec_helper.rb"
   ]
-  s.homepage = "http://github.com/baccigalupi/manifesto"
+  s.homepage = "http://github.com/blazingcloud/manifesto"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
@@ -36,6 +58,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bundler>, ["~> 1.2.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
+      s.add_development_dependency(%q<wheel.js>, [">= 0"])
+      s.add_development_dependency(%q<gemlicense>, [">= 0"])
+      s.add_development_dependency(%q<manifesto>, [">= 0"])
     else
       s.add_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_dependency(%q<yard>, ["~> 0.7"])
@@ -43,6 +68,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bundler>, ["~> 1.2.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
       s.add_dependency(%q<simplecov>, [">= 0"])
+      s.add_dependency(%q<wheel.js>, [">= 0"])
+      s.add_dependency(%q<gemlicense>, [">= 0"])
+      s.add_dependency(%q<manifesto>, [">= 0"])
     end
   else
     s.add_dependency(%q<rspec>, ["~> 2.8.0"])
@@ -51,6 +79,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bundler>, ["~> 1.2.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
     s.add_dependency(%q<simplecov>, [">= 0"])
+    s.add_dependency(%q<wheel.js>, [">= 0"])
+    s.add_dependency(%q<gemlicense>, [">= 0"])
+    s.add_dependency(%q<manifesto>, [">= 0"])
   end
 end
 

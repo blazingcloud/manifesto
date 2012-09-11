@@ -4,6 +4,12 @@ GIT
   specs:
     wheel.js (0.3.7)
 
+GIT
+  remote: https://github.com/blazingcloud/manifesto.git
+  revision: 30d772e0a83b6b669b87da3ddc342119a81c0f29
+  specs:
+    manifesto (0.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -41,6 +47,7 @@ DEPENDENCIES
   bundler (~> 1.2.0)
   gemlicense
   jeweler (~> 1.8.3)
+  manifesto!
   rdoc (~> 3.12)
   rspec (~> 2.8.0)
   simplecov

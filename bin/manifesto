@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
+begin
+  require 'rubygems'
+  gem 'manifesto'
+  require 'manifesto'
+rescue LoadError
+  dir = `bundle show manifesto`.strip
+  require "#{dir}/lib/manifesto"
+end
 
-# todo: make this point to the gem
-require '/Users/kane/Projects/blazing_cloud/manifesto/lib/manifesto'
-
-Manifesto.generate Dir.pwd
-
+Manifesto.generate( Dir.pwd )
