@@ -25,4 +25,30 @@ describe 'Manifesto::MatchMaker' do
         "Hello World! This is a test of the normalization functions of the manifesto! Proceed ..."
     end
   end
+
+  describe '.load_licenses' do
+    it "will gather all the license files and store the normalized version by key in .licenses" do
+      Manifesto::MatchMaker.load_licenses
+
+      Manifesto::MatchMaker.licenses['mit'].should_not be_nil 
+      Manifesto::MatchMaker.licenses['ruby'].should_not be_nil
+      Manifesto::MatchMaker.licenses['apache_2'].should_not be_nil
+      Manifesto::MatchMaker.licenses['bsd'].should_not be_nil
+      Manifesto::MatchMaker.licenses['gpl_2'].should_not be_nil
+      Manifesto::MatchMaker.licenses['lgpl_2'].should_not be_nil
+    end
+  end
+
+  describe '.find' do
+    before do
+      @comparitors_dir = File.dirname(__FILE__) + "/../lib/comparators"
+    end
+
+    it "will find exact matches" do
+      mit = File.read("#{@comparitors_dir}/mit.txt")
+      match = Manifesto::MatchMaker.find(mit)
+      match['type'].should == 'mit'
+      match['proximity'].should == 0
+    end
+  end
 end
