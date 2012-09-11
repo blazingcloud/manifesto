@@ -8,8 +8,9 @@ module Manifesto
         info['licenses'].each_with_index do |license, i|
           str << "  #{license['type']} - "
           str << "percent matched: #{license['percent_matched']}%\n"
+          str << "    diffs: #{license['diff']}\n" if license['diff']
         end
-        str << "\n"
+        str << "\n\n"
         str
       end
  

@@ -33,7 +33,7 @@ module Manifesto
       load_licenses
       info = []
       licenses.each do |name, text|
-        info << [calculator(text).match(source), name]
+        info << [calculator(text).match(source), name, text]
       end
       match = info.min
 
@@ -45,11 +45,16 @@ module Manifesto
         type = match[1].gsub('_', ' ').upcase
       else
         type = 'UNKNOWN'
-      end 
+      end
+
+      diff = if percent_matched > 50 and percent_matched < 100
+        source.gsub(match[2], '')
+      end
 
       {
         'type' => type,
         'percent_matched' => percent_matched,
+        'diff' => diff
       }    
     end
   end
