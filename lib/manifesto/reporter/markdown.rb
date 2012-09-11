@@ -12,6 +12,8 @@ module Manifesto
       def print_gem gem_name, info
         str = "## #{gem_name}, version #{info['version']}, #{info['licenses'].size} license(s):\n"
         info['licenses'].each_with_index do |license, i|
+          str << "    type: #{license['type']}\n"
+          str << "    percent matched: #{license['percent_matched']}%\n" if license['percent_matched']
           str << "#{license['body']}\n"
           str << "***\n"
         end

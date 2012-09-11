@@ -82,14 +82,8 @@ module Manifesto
         body = File.read("#{dir}/#{file_name}")
         license_data = {
           'body' => body
-        }
-        match = MatchMaker.find(body)
-        unless match['proximity'] >= match['total_length']
-          license_data['type'] = match['type']
-          license_data['proximity'] = match['proximity']
-          license_data['difference_ratio'] = match['proximity']/match['total_length'].to_f
-        end
-
+        }.merge(MatchMaker.find(body))
+        
         gems[name]['licenses'] << license_data
       end
       true

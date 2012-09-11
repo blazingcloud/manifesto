@@ -36,10 +36,20 @@ module Manifesto
         info << [calculator(text).match(source), name]
       end
       match = info.min
+
+      percent_matched = if match[0]
+        ((1 - match[0]/source.size.to_f)*100).round
+      end
+
+      if percent_matched.to_i >= 50
+        type = match[1].gsub('_', ' ').upcase
+      else
+        type = 'UNKNOWN'
+      end 
+
       {
-        'type' => match[1],
-        'proximity' => match[0],
-        'total_length' => source.size
+        'type' => type,
+        'percent_matched' => percent_matched,
       }    
     end
   end

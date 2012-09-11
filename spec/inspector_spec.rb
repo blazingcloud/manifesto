@@ -115,7 +115,7 @@ describe "Manifesto::Inspector" do
 
     describe 'license match data' do
       it "includes type" do
-        @inspector.gems['bundler']['licenses'][0]['type'].should == 'mit'
+        @inspector.gems['bundler']['licenses'][0]['type'].should == 'MIT'
       end
     end
   end

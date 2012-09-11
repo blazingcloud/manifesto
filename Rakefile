@@ -41,3 +41,9 @@ task :default => :spec
 
 require 'yard'
 YARD::Rake::YardocTask.new
+
+desc "generate the manifesto using current data"
+task :manifesto do
+  require File.dirname(__FILE__) + "/lib/manifesto"
+  Manifesto.generate Dir.pwd
+end
