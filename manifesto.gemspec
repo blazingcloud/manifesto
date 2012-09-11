@@ -26,21 +26,32 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/manifesto",
+    "lib/comparators/apache_2.txt",
+    "lib/comparators/bsd.txt",
+    "lib/comparators/gpl_2.txt",
+    "lib/comparators/gpl_3.txt",
+    "lib/comparators/lgpl_2.txt",
+    "lib/comparators/lgpl_3.txt",
+    "lib/comparators/mit.txt",
+    "lib/comparators/ruby.txt",
     "lib/generators/USAGE",
     "lib/generators/manifesto/git_hook_generator.rb",
     "lib/generators/templates/pre-commit",
     "lib/manifesto.rb",
     "lib/manifesto/inspector.rb",
+    "lib/manifesto/match_maker.rb",
     "lib/manifesto/railtie.rb",
     "lib/manifesto/reporter.rb",
     "lib/manifesto/reporter/json.rb",
     "lib/manifesto/reporter/markdown.rb",
+    "lib/manifesto/reporter/summary.rb",
     "lib/manifesto/reporter/text.rb",
     "lib/tasks/manifesto.rake",
     "manifesto.gemspec",
     "spec/fixtures/Gemfile",
     "spec/inspector_spec.rb",
     "spec/manifesto_spec.rb",
+    "spec/match_maker_spec.rb",
     "spec/reporter_spec.rb",
     "spec/spec_helper.rb"
   ]
@@ -54,6 +65,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<amatch>, ["~> 0.2.10"])
       s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_development_dependency(%q<yard>, ["~> 0.7"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
@@ -64,6 +76,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<gemlicense>, [">= 0"])
       s.add_development_dependency(%q<manifesto>, [">= 0"])
     else
+      s.add_dependency(%q<amatch>, ["~> 0.2.10"])
       s.add_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_dependency(%q<yard>, ["~> 0.7"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
@@ -75,6 +88,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<manifesto>, [">= 0"])
     end
   else
+    s.add_dependency(%q<amatch>, ["~> 0.2.10"])
     s.add_dependency(%q<rspec>, ["~> 2.8.0"])
     s.add_dependency(%q<yard>, ["~> 0.7"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
