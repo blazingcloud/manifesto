@@ -1,0 +1,10 @@
+Description:
+    Install pre-commit git hook that runs manifesto
+
+Example:
+    rails generate manifesto
+
+    This will create:
+        # simple script to generate and stage manifesto files before a git commit
+        .git/hooks/pre-commit
+
