@@ -73,15 +73,24 @@ module Manifesto
       unless File.exist? dir
         return false
       end
+
       licenses = Dir.entries(dir).map do |d|
         d if d.match(/license|copying|legal|gpl/i)
       end.compact
 
       licenses.each do |file_name|
         body = File.read("#{dir}/#{file_name}")
-        gems[name]['licenses'] << {
+        license_data = {
           'body' => body
         }
+        match = MatchMaker.find(body)
+        unless match['proximity'] >= match['total_length']
+          license_data['type'] = match['type']
+          license_data['proximity'] = match['proximity']
+          license_data['difference_ratio'] = match['proximity']/match['total_length'].to_f
+        end
+
+        gems[name]['licenses'] << license_data
       end
       true
     end

@@ -44,11 +44,21 @@ describe 'Manifesto::MatchMaker' do
       @comparitors_dir = File.dirname(__FILE__) + "/../lib/comparators"
     end
 
-    it "will find exact matches" do
+    it "will find exact matches to MIT" do
       mit = File.read("#{@comparitors_dir}/mit.txt")
       match = Manifesto::MatchMaker.find(mit)
       match['type'].should == 'mit'
       match['proximity'].should == 0
+      match['total_length'].should == Manifesto::MatchMaker.normalize(mit).size
+    end
+
+    it "will find exact matches to MIT with headers" do
+      mit = File.read("#{@comparitors_dir}/mit.txt")
+      mit = "Copyright (c) 2012 Blazing Cloud, Inc.\n\n#{mit}"
+      match = Manifesto::MatchMaker.find(mit)
+      match['type'].should == 'mit'
+      match['proximity'].should > 0
+      match['total_length'].should == Manifesto::MatchMaker.normalize(mit).size
     end
   end
 end

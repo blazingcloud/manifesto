@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Manifesto::Inspector" do
-  before do
+  before :all do
     @path = File.dirname(__FILE__) + "/../"
     @inspector = Manifesto::Inspector.new @path
   end
@@ -30,8 +30,11 @@ describe "Manifesto::Inspector" do
   end
 
   describe 'building a gem list' do
-    it "compiles a list of gems" do
+    before :all do
       @inspector.find_gems
+    end
+
+    it "compiles a list of gems" do
       %w(
         bundler
         diff-lcs
@@ -54,13 +57,12 @@ describe "Manifesto::Inspector" do
     end
 
     it "the gem hash will contain the right version information" do
-      @inspector.find_gems
       @inspector.gems['json']['version'].should == '1.7.5'
     end
   end
 
   describe 'finding licenses' do
-    before do
+    before :all do
       @inspector.find_licenses
     end
 
@@ -109,6 +111,12 @@ describe "Manifesto::Inspector" do
 
     it "finds licenses for gems packaged by git" do
       @inspector.gems['wheel.js']['licenses'].size.should == 1
+    end
+
+    describe 'license match data' do
+      it "includes type" do
+        @inspector.gems['bundler']['licenses'][0]['type'].should == 'mit'
+      end
     end
   end
 end

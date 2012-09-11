@@ -74,7 +74,7 @@ module Manifesto
           puts "Unable to print manifest in format #{klass}:\n#{e}"
         end
       end
-      return @@reports
+      return nil #@@reports
     end
   end
 end

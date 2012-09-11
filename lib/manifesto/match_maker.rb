@@ -7,7 +7,7 @@ module Manifesto
         str << line.strip.gsub(/\s+/, ' ')
         str << " " # separate each line with a space
       end
-      str.strip
+      str.gsub(/\s+/, ' ').strip
     end
 
     def self.load_licenses
@@ -38,7 +38,8 @@ module Manifesto
       match = info.min
       {
         'type' => match[1],
-        'proximity' => match[0]
+        'proximity' => match[0],
+        'total_length' => source.size
       }    
     end
   end
