@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "manifesto"
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kane Baccigalupi"]
@@ -26,7 +26,9 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/manifesto",
-    "lib/generators/pre-commit",
+    "lib/generators/USAGE",
+    "lib/generators/manifesto/git_hook_generator.rb",
+    "lib/generators/templates/pre-commit",
     "lib/manifesto.rb",
     "lib/manifesto/inspector.rb",
     "lib/manifesto/railtie.rb",
