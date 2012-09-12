@@ -1,7 +1,7 @@
 module Manifesto
   class Reporter
     class Summary < Reporter
-      FORMAT = 'summary.txt'
+      FORMAT = 'txt'
 
       def print_gem gem_name, info
         str = "#{gem_name} - version: #{info['version']}\n"

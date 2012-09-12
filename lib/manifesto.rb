@@ -5,7 +5,7 @@ manifesto_dir = File.dirname(__FILE__) + "/manifesto"
 
 require "#{manifesto_dir}/inspector"
 require "#{manifesto_dir}/reporter"
-require "#{manifesto_dir}/reporter/text"
+require "#{manifesto_dir}/reporter/full"
 require "#{manifesto_dir}/reporter/markdown"
 require "#{manifesto_dir}/reporter/json"
 require "#{manifesto_dir}/reporter/summary"

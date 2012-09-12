@@ -56,7 +56,7 @@ describe 'Manifesto::Reporter' do
         :gems => @gems,
         :dir => @dir
       })
-      @reporter = Manifesto::Reporter::Text.new({
+      @reporter = Manifesto::Reporter::Summary.new({
         :gems => @gems,
         :dir => @dir
       })
