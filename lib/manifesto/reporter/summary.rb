@@ -17,7 +17,12 @@ module Manifesto
       def exceptions
         str = "\n\nEXCEPTIONS\n"
         exceptional_gems.each do |gem_name, info|
-          str << "#{gem_name}, version #{info['version']} : NO LICENSE FOUND\n"
+          str << "#{gem_name}, version #{info['version']} : "
+          if info['licenses'].size == 0
+            str <<  "NO LICENSE FOUND\n"
+          else
+            str << "UNKNOWN LICENSE\n"
+          end
         end
         str
       end

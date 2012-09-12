@@ -43,6 +43,12 @@ module Manifesto
         if info['licenses'].size == 0
           error_cases[gem_name] = info
         end
+
+        info['licenses'].each do |license|
+          if license['type'] == "UNKNOWN"
+            error_cases[gem_name] = info
+          end
+        end
       end
       error_cases
     end

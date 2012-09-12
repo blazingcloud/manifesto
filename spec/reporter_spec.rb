@@ -104,6 +104,10 @@ describe 'Manifesto::Reporter' do
       it "lists the gems that have no licenses" do
         @reporter.exceptions.should include "git"
       end
+
+      it "listes the gems that have an unknow license" do
+        @reporter.exceptions.should include "rdoc"
+      end
     end
   end
 end
