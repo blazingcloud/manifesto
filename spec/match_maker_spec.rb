@@ -59,12 +59,12 @@ describe 'Manifesto::MatchMaker' do
       match['percent_matched'].should > 90
     end
 
-    it "exact matches to the MIT with a copyright header " do
+    it "matches to the MIT with a copyright header " do
       mit = File.read("#{@comparitors_dir}/mit.txt")
       mit = "Copyright (c) 2012 Blazing Cloud, Inc.\n\n#{mit}"
       match = Manifesto::MatchMaker.find(mit)
       match['type'].should == 'MIT'
-      match['percent_matched'].should == 100
+      match['percent_matched'].should < 100
     end
   end
 end

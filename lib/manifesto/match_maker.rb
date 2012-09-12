@@ -61,11 +61,6 @@ module Manifesto
         self.diff = if percent_matched > 50 and percent_matched < 100
           source.gsub(match[2], '')
         end
-
-        if  match[1] == 'mit' && percent_matched > 85 && diff && diff.match(/^(\(The MIT License\) )?Copyright \(c\) \d{4}/)
-          self.percent_matched = 100
-          self.diff = nil
-        end
       end
 
       def calculate_percent_matched

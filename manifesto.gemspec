@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kane Baccigalupi"]
-  s.date = "2012-09-11"
+  s.date = "2012-09-12"
   s.description = "Manifesto inspects your bundled gems to compile a list of licences for each gem and sub-gem used in a project. Just use a Gemfile, and Manifesto, and go!"
   s.email = "info@blazingcloud.net"
   s.executables = ["manifesto"]
