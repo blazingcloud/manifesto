@@ -15,6 +15,7 @@ module Manifesto
       Dir.entries(COMPARATORS_DIR).each do |file|
         next if ['.', '..'].include?(file)
         name = File.basename(file, '.txt')
+        name = name.gsub(/^\d_/, '')
         licenses[name] = normalize(File.read("#{COMPARATORS_DIR}/#{file}"))
       end
       licenses
@@ -32,10 +33,17 @@ module Manifesto
       source = normalize(source)
       load_licenses
       info = []
+      match = nil
       licenses.each do |name, text|
-        info << [calculator(text).match(source), name, text]
+        next if match 
+        lev_distance = calculator(text).match(source)
+        match_details = [lev_distance, name, text]
+        if (1 -lev_distance/source.size.to_f)*100 > 85
+          match = match_details
+        end
+        info << match_details
       end
-      match = info.min
+      match ||= info.min
       Packager.extract match, source
     end
 
